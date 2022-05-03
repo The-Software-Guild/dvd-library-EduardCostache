@@ -5,8 +5,6 @@ public interface UserIO {
 
     String readString(String prompt);
 
-    String readStringLine(String prompt);
-
     int readInt(String prompt);
 
     int readInt(String prompt, int min, int max);

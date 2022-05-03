@@ -11,6 +11,6 @@ public class DaoFileImpl implements Dao{
 
     @Override
     public DVD addDVD(DVD newDVD) {
-        return null;
+        return DVDMap.put(newDVD.getTitle(), newDVD);
     }
 }
