@@ -18,4 +18,9 @@ public class DaoFileImpl implements Dao{
     public DVD removeDVD(String title) {
         return dvdMap.remove(title);
     }
+
+    @Override
+    public DVD getDVD(String title) {
+        return dvdMap.get(title);
+    }
 }

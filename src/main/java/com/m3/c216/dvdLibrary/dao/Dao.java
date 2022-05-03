@@ -6,4 +6,7 @@ public interface Dao {
     DVD addDVD(DVD newDVD);
 
     DVD removeDVD(String title);
+
+
+    DVD getDVD(String title);
 }

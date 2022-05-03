@@ -14,6 +14,7 @@ public class DVD {
         this.MPPAARating = MPPAARating;
         this.directorName = directorName;
         this.studio = studio;
+        userRating = "None";
     }
 
     public String getTitle() {
@@ -42,5 +43,25 @@ public class DVD {
 
     public void setUserRating(String userRating) {
         this.userRating = userRating;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public void setMPPAARating(String MPPAARating) {
+        this.MPPAARating = MPPAARating;
+    }
+
+    public void setDirectorName(String directorName) {
+        this.directorName = directorName;
+    }
+
+    public void setStudio(String studio) {
+        this.studio = studio;
     }
 }

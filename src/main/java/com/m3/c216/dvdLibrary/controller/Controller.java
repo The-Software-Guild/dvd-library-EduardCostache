@@ -30,6 +30,12 @@ public class Controller {
                 case 2:
                     removeDVD();
                     break;
+                case 3:
+                    userIO.print("EDIT DVD");
+                    break;
+                case 4:
+                    searchDVD();
+                    break;
                 case 0:
                     closeMenu = true;
                     break;
@@ -41,7 +47,7 @@ public class Controller {
     }
 
     private int getMenuSelection(){
-        return view.printMenuAndGetSelection();
+        return view.printMainMenuAndGetSelection();
     }
 
     private void addDVD(){
@@ -56,6 +62,35 @@ public class Controller {
         String title = view.getDVDTitle();
         DVD removedDVD = dao.removeDVD(title);
         view.displayRemoveDVDVerification(removedDVD);
+    }
+
+    private void searchDVD(){
+        view.displaySearchDVDBanner();
+        String title = view.getDVDTitle();
+        DVD dvd = dao.getDVD(title);
+        view.viewDVD(dvd);
+    }
+
+    private void editDVD(){
+        boolean closeEditMenu = false;
+        int editMenuSelection;
+
+        while(!closeEditMenu){
+            editMenuSelection = view.printEditMenuAndGetSelection();
+
+            switch (editMenuSelection){
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 0:
+                    closeEditMenu = true;
+                    break;
+                default:
+                    unknownCommand();
+            }
+        }
     }
 
     private void unknownCommand(){
