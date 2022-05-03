@@ -7,10 +7,15 @@ import java.util.Map;
 
 public class DaoFileImpl implements Dao{
 
-    private Map<String, DVD> DVDMap = new HashMap<>();
+    private Map<String, DVD> dvdMap = new HashMap<>();
 
     @Override
     public DVD addDVD(DVD newDVD) {
-        return DVDMap.put(newDVD.getTitle(), newDVD);
+        return dvdMap.put(newDVD.getTitle(), newDVD);
+    }
+
+    @Override
+    public DVD removeDVD(String title) {
+        return dvdMap.remove(title);
     }
 }

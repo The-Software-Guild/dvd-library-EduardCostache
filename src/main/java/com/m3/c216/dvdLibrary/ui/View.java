@@ -14,6 +14,7 @@ public class View {
         //TODO: Change exit button and readInt()
         userIO.print("--- Main Menu ---");
         userIO.print("\t1. Add DVD");
+        userIO.print("\t2. Remove DVD");
         userIO.print("\t0. Exit");
 
         return userIO.readInt("Please select from the above choices.");
@@ -29,16 +30,39 @@ public class View {
         return new DVD(title, releaseDate, MPAARating, directorName, studio);
     }
 
+    public String getDVDTitle(){
+        return userIO.readString("Please enter DVD Title:");
+    }
+
     public void displayAddDVDBanner(){
         userIO.print("");
         userIO.print("=== Adding new DVD ===");
         userIO.print("");
     }
 
+    public void displayAddDVDVerification(){
+        userIO.print("~~~ DVD SUCCESSFULLY ADDED ~~~");
+    }
+
+    public void displayRemoveDVDBanner(){
+        userIO.print("");
+        userIO.print("=== Removing a DVD ===");
+        userIO.print("");
+    }
+
+    public void displayRemoveDVDVerification(DVD dvdRecord){
+
+        if(dvdRecord != null){
+            userIO.print("~~~ DVD SUCCESSFULLY REMOVED ~~~");
+        }else{
+            userIO.print("*** NO SUCH DVD ***");
+        }
+        userIO.print("");
+    }
+
     public void displayUnknownCommandBanner(){
         userIO.print("*** UNKNOWN COMMAND ***");
     }
-
     public void displayGoodByeMessage(){
         userIO.print("*** GOODBYE ***");
     }

@@ -27,6 +27,9 @@ public class Controller {
                 case 1:
                     addDVD();
                     break;
+                case 2:
+                    removeDVD();
+                    break;
                 case 0:
                     closeMenu = true;
                     break;
@@ -45,6 +48,14 @@ public class Controller {
         view.displayAddDVDBanner();
         DVD newDVD = view.getNewDVDInfo();
         dao.addDVD(newDVD);
+        view.displayAddDVDVerification();
+    }
+
+    private void removeDVD(){
+        view.displayRemoveDVDBanner();
+        String title = view.getDVDTitle();
+        DVD removedDVD = dao.removeDVD(title);
+        view.displayRemoveDVDVerification(removedDVD);
     }
 
     private void unknownCommand(){
