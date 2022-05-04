@@ -5,11 +5,11 @@ import com.m3.c216.dvdLibrary.dto.DVD;
 import java.util.List;
 
 public interface Dao {
-    DVD addDVD(DVD newDVD);
+    DVD addDVD(DVD newDVD) throws DaoException;
 
-    DVD removeDVD(String title);
+    DVD removeDVD(String title) throws DaoException;
 
-    DVD getDVD(String title);
+    DVD getDVD(String title) throws DaoException;
 
-    List<DVD> getAllDVDs();
+    List<DVD> getAllDVDs() throws DaoException;
 }

@@ -1,6 +1,7 @@
 package com.m3.c216.dvdLibrary.controller;
 
 import com.m3.c216.dvdLibrary.dao.Dao;
+import com.m3.c216.dvdLibrary.dao.DaoException;
 import com.m3.c216.dvdLibrary.dto.DVD;
 import com.m3.c216.dvdLibrary.ui.UserIO;
 import com.m3.c216.dvdLibrary.ui.UserIOConsoleImpl;
@@ -20,61 +21,66 @@ public class Controller {
         boolean closeMenu = false;
         int menuSelection;
 
-        while(!closeMenu){
-            menuSelection = getMenuSelection();
+        try{
+            while(!closeMenu){
+                menuSelection = getMenuSelection();
 
-            switch (menuSelection) {
-                case 1:
-                    addDVD();
-                    break;
-                case 2:
-                    removeDVD();
-                    break;
-                case 3:
-                    editDVD();
-                    break;
-                case 4:
-                    searchDVD();
-                    break;
-                case 5:
-                    viewAllDVDs();
-                    break;
-                case 0:
-                    closeMenu = true;
-                    break;
-                default:
-                    unknownCommand();
+                switch (menuSelection) {
+                    case 1:
+                        addDVD();
+                        break;
+                    case 2:
+                        removeDVD();
+                        break;
+                    case 3:
+                        editDVD();
+                        break;
+                    case 4:
+                        searchDVD();
+                        break;
+                    case 5:
+                        viewAllDVDs();
+                        break;
+                    case 0:
+                        closeMenu = true;
+                        break;
+                    default:
+                        unknownCommand();
+                }
             }
+            goodbyeMessage();
+        }catch (DaoException e){
+            view.displayErrorMessage(e.getMessage());
         }
-        goodbyeMessage();
+
     }
 
     private int getMenuSelection(){
         return view.printMainMenuAndGetSelection();
     }
 
-    private void addDVD(){
+    private void addDVD() throws DaoException{
         view.displayAddDVDBanner();
         DVD newDVD = view.getNewDVDInfo();
         dao.addDVD(newDVD);
         view.displayAddDVDVerification();
     }
 
-    private void removeDVD(){
+    private void removeDVD() throws DaoException{
         view.displayRemoveDVDBanner();
         String title = view.getDVDTitle(false);
         DVD removedDVD = dao.removeDVD(title);
         view.displayRemoveDVDVerification(removedDVD);
     }
 
-    private void searchDVD(){
+    private void searchDVD() throws DaoException{
         view.displaySearchDVDBanner();
         String title = view.getDVDTitle(false);
         DVD dvd = dao.getDVD(title);
         view.viewDVD(dvd);
     }
 
-    private void editDVD(){
+    private void editDVD() throws DaoException{
         view.displayEditingDVDBanner();
         boolean closeEditMenu = false;
         int editMenuSelection;
@@ -133,7 +139,7 @@ public class Controller {
         }
     }
 
-    private void viewAllDVDs(){
+    private void viewAllDVDs() throws DaoException {
         view.displayViewingAllDVDs();
         view.viewAllDVD(dao.getAllDVDs());
     }

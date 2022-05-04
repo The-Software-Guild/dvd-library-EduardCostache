@@ -151,4 +151,8 @@ public class View {
     public void displayNoSuchDVD(){
         userIO.print("*** NO SUCH DVD ***");
     }
+
+    public void displayErrorMessage(String errorMessage){
+        userIO.print("*** ERROR ***");
+        userIO.print(errorMessage);}
 }
