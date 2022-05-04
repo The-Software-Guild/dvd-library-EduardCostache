@@ -31,10 +31,13 @@ public class Controller {
                     removeDVD();
                     break;
                 case 3:
-                    userIO.print("EDIT DVD");
+                    editDVD();
                     break;
                 case 4:
                     searchDVD();
+                    break;
+                case 5:
+                    viewAllDVDs();
                     break;
                 case 0:
                     closeMenu = true;
@@ -59,38 +62,80 @@ public class Controller {
 
     private void removeDVD(){
         view.displayRemoveDVDBanner();
-        String title = view.getDVDTitle();
+        String title = view.getDVDTitle(false);
         DVD removedDVD = dao.removeDVD(title);
         view.displayRemoveDVDVerification(removedDVD);
     }
 
     private void searchDVD(){
         view.displaySearchDVDBanner();
-        String title = view.getDVDTitle();
+        String title = view.getDVDTitle(false);
         DVD dvd = dao.getDVD(title);
         view.viewDVD(dvd);
     }
 
     private void editDVD(){
+        view.displayEditingDVDBanner();
         boolean closeEditMenu = false;
         int editMenuSelection;
 
-        while(!closeEditMenu){
-            editMenuSelection = view.printEditMenuAndGetSelection();
+        DVD dvdToEdit = dao.getDVD(view.getDVDTitle(true));
 
-            switch (editMenuSelection){
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 0:
-                    closeEditMenu = true;
-                    break;
-                default:
-                    unknownCommand();
+        if(dvdToEdit != null){
+            String newTitle = dvdToEdit.getTitle();
+            String relDate = dvdToEdit.getReleaseDate();
+            String mpaaRating = dvdToEdit.getMPPAARating();
+            String dirName = dvdToEdit.getDirectorName();
+            String studio = dvdToEdit.getStudio();
+            String userRating = dvdToEdit.getUserRating();
+
+            while(!closeEditMenu){
+                editMenuSelection = view.printEditMenuAndGetSelection();
+
+                switch (editMenuSelection){
+                    case 1:
+                        newTitle = view.getDVDEditInfo("Title");
+                        view.displayEditPropertyVerification("TITLE");
+                        dao.removeDVD(dvdToEdit.getTitle());
+                        closeEditMenu = true;
+                        break;
+                    case 2:
+                        relDate = view.getDVDEditInfo("Release Date");
+                        view.displayEditPropertyVerification("RELEASE DATE");
+                        break;
+                    case 3:
+                        mpaaRating = view.getDVDEditInfo("MPAA Rating");
+                        view.displayEditPropertyVerification("MPAA RATING");
+                        break;
+                    case 4:
+                        dirName = view.getDVDEditInfo("Director Name");
+                        view.displayEditPropertyVerification("DIRECTOR NAME");
+                        break;
+                    case 5:
+                        studio = view.getDVDEditInfo("Studio");
+                        view.displayEditPropertyVerification("STUDIO");
+                        break;
+                    case 6:
+                        userRating = view.getDVDEditInfo("User Rating");
+                        view.displayEditPropertyVerification("USER RATING");
+                        break;
+                    case 0:
+                        closeEditMenu = true;
+                        break;
+                    default:
+                        unknownCommand();
+                }
+                dao.addDVD(new DVD(newTitle, relDate, mpaaRating, dirName, studio, userRating));
             }
         }
+        else{
+            view.displayNoSuchDVD();
+        }
+    }
+
+    private void viewAllDVDs(){
+        view.displayViewingAllDVDs();
+        view.viewAllDVD(dao.getAllDVDs());
     }
 
     private void unknownCommand(){

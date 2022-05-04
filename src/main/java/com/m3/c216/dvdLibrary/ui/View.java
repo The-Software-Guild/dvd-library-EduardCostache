@@ -2,6 +2,8 @@ package com.m3.c216.dvdLibrary.ui;
 
 import com.m3.c216.dvdLibrary.dto.DVD;
 
+import java.util.List;
+
 public class View {
     private UserIO userIO;
 
@@ -17,6 +19,7 @@ public class View {
         userIO.print("\t2. Remove DVD");
         userIO.print("\t3. Edit DVD");
         userIO.print("\t4. Search for DVD");
+        userIO.print("\t5. View all DVDs");
         userIO.print("\t0. Exit");
 
         return userIO.readInt("Please select from the above choices.");
@@ -29,13 +32,14 @@ public class View {
         userIO.print("\t\t3. MPAA Rating");
         userIO.print("\t\t4. Director's name");
         userIO.print("\t\t5. Studio");
+        userIO.print("\t\t6. User Rating");
         userIO.print("\t\t0. Exit");
 
         return userIO.readInt("Please select which property you want to edit");
     }
 
     public DVD getNewDVDInfo(){
-        String title = getDVDTitle();
+        String title = getDVDTitle(false);
         String releaseDate = userIO.readString("Please enter DVD Release Date:");
         String MPAARating = userIO.readString("Please enter DVD MPAA Rating:");
         String directorName = userIO.readString("Please enter the Director's name of DVD:");
@@ -44,13 +48,22 @@ public class View {
         return new DVD(title, releaseDate, MPAARating, directorName, studio);
     }
 
-    public String getDVDTitle(){
-        return userIO.readString("Please enter DVD Title:");
+    public String getDVDTitle(boolean forEdit){
+        if(forEdit)
+        {
+            return userIO.readString("Please enter the Title of the DVD you wish to Edit:");
+        }
+        else {
+            return userIO.readString("Please enter DVD Title: ");
+        }
+    }
+
+    public String getDVDEditInfo(String property){
+        return userIO.readString("Enter a new "+property+": ");
     }
 
     public void viewDVD(DVD dvd){
         if(dvd != null){
-            userIO.print("");
             userIO.print("~~~ SEARCH RESULT ~~~");
             userIO.print("Title: "+dvd.getTitle());
             userIO.print("Release Date: "+dvd.getReleaseDate());
@@ -61,7 +74,18 @@ public class View {
             userIO.print("");
         }
         else{
-            userIO.print("*** NO SUCH DVD ***");
+            displayNoSuchDVD();
+        }
+    }
+
+    public void viewAllDVD(List<DVD> dvdList){
+        if(dvdList.isEmpty()){
+            displayNoDVDsInCollection();
+        }
+        else{
+            for(DVD dvd : dvdList){
+                viewDVD(dvd);
+            }
         }
     }
 
@@ -87,6 +111,16 @@ public class View {
         userIO.print("");
     }
 
+    public void displayViewingAllDVDs(){
+        userIO.print("");
+        userIO.print("=== Viewing all DVDs ===");
+        userIO.print("");
+    }
+
+    public void displayNoDVDsInCollection(){
+        userIO.print("*** NO DVDs IN COLLECTION ***");
+    }
+
     public void displaySearchDVDBanner(){
         userIO.print("");
         userIO.print("=== Searching for DVD ===");
@@ -98,9 +132,13 @@ public class View {
         if(dvdRecord != null){
             userIO.print("~~~ DVD SUCCESSFULLY REMOVED ~~~");
         }else{
-            userIO.print("*** NO SUCH DVD ***");
+            displayNoSuchDVD();
         }
         userIO.print("");
+    }
+
+    public void displayEditPropertyVerification(String property){
+        userIO.print("~~~ "+property+" SUCCESSFULLY CHANGED ~~~");
     }
 
     public void displayUnknownCommandBanner(){
@@ -108,5 +146,9 @@ public class View {
     }
     public void displayGoodByeMessage(){
         userIO.print("*** GOODBYE ***");
+    }
+
+    public void displayNoSuchDVD(){
+        userIO.print("*** NO SUCH DVD ***");
     }
 }

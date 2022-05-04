@@ -17,6 +17,15 @@ public class DVD {
         userRating = "None";
     }
 
+    public DVD(String title, String releaseDate, String MPPAARating, String directorName, String studio, String userRating) {
+        this.title = title;
+        this.releaseDate = releaseDate;
+        this.MPPAARating = MPPAARating;
+        this.directorName = directorName;
+        this.studio = studio;
+        this.userRating = userRating;
+    }
+
     public String getTitle() {
         return title;
     }
