@@ -3,14 +3,11 @@ package com.m3.c216.dvdLibrary.controller;
 import com.m3.c216.dvdLibrary.dao.Dao;
 import com.m3.c216.dvdLibrary.dao.DaoException;
 import com.m3.c216.dvdLibrary.dto.DVD;
-import com.m3.c216.dvdLibrary.ui.UserIO;
-import com.m3.c216.dvdLibrary.ui.UserIOConsoleImpl;
 import com.m3.c216.dvdLibrary.ui.View;
 
 public class Controller {
-    private UserIO userIO = new UserIOConsoleImpl();
-    private Dao dao;
-    private View view;
+    private final Dao dao;
+    private final View view;
 
     public Controller(Dao dao, View view){
         this.dao = dao;
@@ -52,7 +49,6 @@ public class Controller {
         }catch (DaoException e){
             view.displayErrorMessage(e.getMessage());
         }
-
     }
 
     private int getMenuSelection(){
@@ -77,6 +73,7 @@ public class Controller {
         view.displaySearchDVDBanner();
         String title = view.getDVDTitle(false);
         DVD dvd = dao.getDVD(title);
+        view.displaySearchResultBanner();
         view.viewDVD(dvd);
     }
 
@@ -127,6 +124,7 @@ public class Controller {
                         break;
                     case 0:
                         closeEditMenu = true;
+                        view.displayEditMenuClose();
                         break;
                     default:
                         unknownCommand();

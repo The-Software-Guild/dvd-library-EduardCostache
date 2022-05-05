@@ -1,39 +1,42 @@
 package com.m3.c216.dvdLibrary.ui;
 
 import com.m3.c216.dvdLibrary.dto.DVD;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
 public class View {
-    private UserIO userIO;
+    private final UserIO userIO;
+    private final int MENU_PADDING = 24;
+    private final int BANNER_PADDING = 30;
 
     public View(UserIO userIO){
         this.userIO = userIO;
     }
 
     public int printMainMenuAndGetSelection(){
-        //TODO: Add more buttons
-        //TODO: Change exit button and readInt()
-        userIO.print("--- Main Menu ---");
-        userIO.print("\t1. Add DVD");
-        userIO.print("\t2. Remove DVD");
-        userIO.print("\t3. Edit DVD");
-        userIO.print("\t4. Search for DVD");
-        userIO.print("\t5. View all DVDs");
-        userIO.print("\t0. Exit");
+        userIO.print("|"+StringUtils.center("Main Menu", MENU_PADDING, "-")+"|");
+        userIO.print("|\t1. Add DVD           |");
+        userIO.print("|\t2. Remove DVD        |");
+        userIO.print("|\t3. Edit DVD          |");
+        userIO.print("|\t4. Search for DVD    |");
+        userIO.print("|\t5. View all DVDs     |");
+        userIO.print("|\t0. Exit              |");
+        userIO.print("|"+StringUtils.center("_", MENU_PADDING, "_")+"|");
 
         return userIO.readInt("Please select from the above choices.");
     }
 
     public int printEditMenuAndGetSelection(){
-        userIO.print("\t--- Edit Menu ---");
-        userIO.print("\t\t1. Title");
-        userIO.print("\t\t2. Release Date");
-        userIO.print("\t\t3. MPAA Rating");
-        userIO.print("\t\t4. Director's name");
-        userIO.print("\t\t5. Studio");
-        userIO.print("\t\t6. User Rating");
-        userIO.print("\t\t0. Exit");
+        userIO.print("|"+StringUtils.center("Edit Menu", MENU_PADDING, "-")+"|");
+        userIO.print("|\t1. Title             |");
+        userIO.print("|\t2. Release Date      |");
+        userIO.print("|\t3. MPAA Rating       |");
+        userIO.print("|\t4. Director's name   |");
+        userIO.print("|\t5. Studio            |");
+        userIO.print("|\t6. User Rating       |");
+        userIO.print("|\t0. Exit              |");
+        userIO.print("|"+StringUtils.center("_", MENU_PADDING, "_")+"|");
 
         return userIO.readInt("Please select which property you want to edit");
     }
@@ -64,13 +67,12 @@ public class View {
 
     public void viewDVD(DVD dvd){
         if(dvd != null){
-            userIO.print("~~~ SEARCH RESULT ~~~");
-            userIO.print("Title: "+dvd.getTitle());
+            userIO.print("Title:        "+dvd.getTitle());
             userIO.print("Release Date: "+dvd.getReleaseDate());
-            userIO.print("MPAA Rating: "+dvd.getMPPAARating());
-            userIO.print("Director : "+dvd.getDirectorName());
-            userIO.print("Studio: "+dvd.getStudio());
-            userIO.print("User Rating: "+dvd.getUserRating());
+            userIO.print("MPAA Rating:  "+dvd.getMPPAARating());
+            userIO.print("Director:     "+dvd.getDirectorName());
+            userIO.print("Studio:       "+dvd.getStudio());
+            userIO.print("User Rating:  "+dvd.getUserRating());
             userIO.print("");
         }
         else{
@@ -90,31 +92,30 @@ public class View {
     }
 
     public void displayAddDVDBanner(){
-        userIO.print("");
-        userIO.print("=== Adding new DVD ===");
-        userIO.print("");
+        userIO.print(StringUtils.center("Adding New DVD", BANNER_PADDING, "="));
+        userIO.print(StringUtils.center("=", BANNER_PADDING, "="));
     }
 
-    public void displayAddDVDVerification(){
-        userIO.print("~~~ DVD SUCCESSFULLY ADDED ~~~");
-    }
 
     public void displayRemoveDVDBanner(){
-        userIO.print("");
-        userIO.print("=== Removing a DVD ===");
-        userIO.print("");
+        userIO.print(StringUtils.center("Removing DVD", BANNER_PADDING, "="));
+        userIO.print(StringUtils.center("=", BANNER_PADDING, "="));
     }
 
     public void displayEditingDVDBanner(){
-        userIO.print("");
-        userIO.print("=== Editing a DVD ===");
-        userIO.print("");
+        userIO.print(StringUtils.center("Editing a DVD", BANNER_PADDING, "="));
+        userIO.print(StringUtils.center("=", BANNER_PADDING, "="));
     }
 
     public void displayViewingAllDVDs(){
-        userIO.print("");
-        userIO.print("=== Viewing all DVDs ===");
-        userIO.print("");
+        userIO.print(StringUtils.center("Viewing All DVDs", BANNER_PADDING, "="));
+        userIO.print(StringUtils.center("=", BANNER_PADDING, "="));
+    }
+
+    public void displaySearchResultBanner(){
+
+        userIO.print(StringUtils.center("SEARCH RESULT", BANNER_PADDING, "~"));
+        userIO.print(StringUtils.center("~", BANNER_PADDING, "~"));
     }
 
     public void displayNoDVDsInCollection(){
@@ -122,15 +123,21 @@ public class View {
     }
 
     public void displaySearchDVDBanner(){
-        userIO.print("");
-        userIO.print("=== Searching for DVD ===");
-        userIO.print("");
+        userIO.print(StringUtils.center("Searching For DVD", BANNER_PADDING, "="));
+        userIO.print(StringUtils.center("=", BANNER_PADDING, "="));
     }
 
+    public void displayAddDVDVerification(){
+        userIO.print(StringUtils.center("~", BANNER_PADDING, "~"));
+        userIO.print(StringUtils.center("DVD SUCCESSFULLY ADDED", BANNER_PADDING, "~"));
+        userIO.print("");
+    }
     public void displayRemoveDVDVerification(DVD dvdRecord){
 
         if(dvdRecord != null){
-            userIO.print("~~~ DVD SUCCESSFULLY REMOVED ~~~");
+            userIO.print(StringUtils.center("~", BANNER_PADDING, "~"));
+            userIO.print(StringUtils.center("DVD SUCCESSFULLY REMOVED", BANNER_PADDING, "~"));
+            userIO.print("");
         }else{
             displayNoSuchDVD();
         }
@@ -138,11 +145,20 @@ public class View {
     }
 
     public void displayEditPropertyVerification(String property){
-        userIO.print("~~~ "+property+" SUCCESSFULLY CHANGED ~~~");
+        userIO.print(StringUtils.center("~", BANNER_PADDING, "~"));
+        userIO.print(StringUtils.center(property+ " SUCCESSFULLY CHANGED", BANNER_PADDING, "~"));
+        userIO.print("");
+    }
+
+    public void displayEditMenuClose(){
+        userIO.print(StringUtils.center("~", BANNER_PADDING, "~"));
+        userIO.print(StringUtils.center("EXITING EDIT MENU", BANNER_PADDING, "~"));
+        userIO.print("");
     }
 
     public void displayUnknownCommandBanner(){
         userIO.print("*** UNKNOWN COMMAND ***");
+        userIO.print("");
     }
     public void displayGoodByeMessage(){
         userIO.print("*** GOODBYE ***");
@@ -150,9 +166,11 @@ public class View {
 
     public void displayNoSuchDVD(){
         userIO.print("*** NO SUCH DVD ***");
+        userIO.print("");
     }
 
     public void displayErrorMessage(String errorMessage){
         userIO.print("*** ERROR ***");
-        userIO.print(errorMessage);}
+        userIO.print(errorMessage);
+        userIO.print("");}
 }

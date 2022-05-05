@@ -9,7 +9,7 @@ public class DaoFileImpl implements Dao{
     private static final String DELIMITER = "::";
     private static final String PATH_TO_FILE = "src/main/java/com/m3/c216/dvdLibrary/data/dvds.txt";
 
-    private Map<String, DVD> dvdMap = new HashMap<>();
+    private final Map<String, DVD> dvdMap = new HashMap<>();
 
     @Override
     public DVD addDVD(DVD newDVD) throws DaoException{
